@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruben ❤️ Rebecca</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff69b4, #ffb6d9, #ffe4f1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #8b004f;
+}
+
+.card {
+    width: 90%;
+    max-width: 500px;
+    background: rgba(255,255,255,0.94);
+    border-radius: 30px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 15px 50px rgba(150,0,80,0.3);
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    font-size: 30px;
+    color: #e60073;
+}
+
+p {
+    font-size: 19px;
+}
+
+.heart {
+    font-size: 70px;
+    animation: heartbeat 1s infinite;
+}
+
+button {
+    border: none;
+    border-radius: 30px;
+    padding: 14px 25px;
+    margin: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.yes {
+    background: #ff1493;
+    color: white;
+}
+
+.no {
+    background: #ddd;
+    color: #444;
+}
+
+.option {
+    display: block;
+    width: 90%;
+    margin: 12px auto;
+    background: #ff69b4;
+    color: white;
+}
+
+button:hover {
+    transform: scale(1.08);
+}
+
+.hidden {
+    display: none;
+}
+
+.message {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.bottom {
+    margin-top: 25px;
+    font-size: 15px;
+    color: #c00063;
+    font-weight: bold;
+}
+
+.heart-float {
+    position: fixed;
+    bottom: -50px;
+    font-size: 25px;
+    animation: floatUp 5s linear forwards;
+    z-index: 1;
+}
+
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <!-- ÉCRAN 1 -->
+    <div id="question">
+        <div class="heart">❤️</div>
+
+        <h1>Rebecca 💕</h1>
+
+        <p>
+            J'ai une question très importante à te poser...
+        </p>
+
+        <h2>Veux-tu être avec Ruben ? 😳❤️</h2>
+
+        <button class="yes" onclick="yesAnswer()">OUI ❤️</button>
+        <button class="no" id="noButton" onclick="noAnswer()">NON 💔</button>
+
+        <div id="noMessage" class="message"></div>
+    </div>
+
+
+    <!-- ÉCRAN 2 -->
+    <div id="together" class="hidden">
+
+        <div class="heart">💖</div>
+
+        <h1>BRAVO ! 🎉❤️</h1>
+
+        <p>
+            Vous êtes maintenant ensemble ! 🥰
+        </p>
+
+        <h2>
+            Mais une dernière question...
+        </h2>
+
+        <p>
+            Combien de temps serez-vous ensemble ? 👀
+        </p>
+
+        <button class="option" onclick="forever()">
+            1️⃣ Pour toujours ❤️
+        </button>
+
+        <button class="option" onclick="denied()">
+            2️⃣ Pour un temps 💔
+        </button>
+
+        <button class="option" onclick="denied()">
+            3️⃣ Jamais 😭
+        </button>
+
+        <div id="choiceMessage" class="message"></div>
+    </div>
+
+
+    <!-- ÉCRAN FINAL -->
+    <div id="final" class="hidden">
+
+        <div class="heart">💖💗💖</div>
+
+        <h1>FÉLICITATIONS ! 🎉</h1>
+
+        <h2>
+            RUBEN ❤️ REBECCA
+        </h2>
+
+        <p class="message">
+            VOUS ÊTES UN COUPLE ! 💕🥰
+        </p>
+
+        <p>
+            💍 Une histoire commence aujourd'hui...<br>
+            ❤️ Pour toujours ❤️ 
+        </p>
+        
+        <h1> DATE : LE 17 AOUT 2026 </h1>
+
+
+        <div class="bottom">
+            📸 Capture l'écran et envoie-le à Ruben ❤️
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let noClicks = 0;
+
+const messages = [
+    "Tu es sûre ? 👀❤️",
+    "Réfléchis encore 😭💕",
+    "Tu viens vraiment de dire NON ? 😭",
+    "Dernière chance 😏❤️",
+    "Le bouton OUI est quand même plus joli... 😂💕",
+    "Allez Rebecca... 😭❤️"
+];
+
+function noAnswer() {
+
+    noClicks++;
+
+    const message = document.getElementById("noMessage");
+    const button = document.getElementById("noButton");
+
+    message.innerText = messages[
+        Math.min(noClicks - 1, messages.length - 1)
+    ];
+
+    // Le bouton commence à bouger
+    if (noClicks >= 2) {
+
+        button.style.position = "fixed";
+
+        const x = Math.random() * (window.innerWidth - 150);
+        const y = Math.random() * (window.innerHeight - 80);
+
+        button.style.left = x + "px";
+        button.style.top = y + "px";
+    }
+}
+
+function yesAnswer() {
+
+    document.getElementById("question").classList.add("hidden");
+    document.getElementById("together").classList.remove("hidden");
+
+    createHearts();
+}
+
+function denied() {
+
+    const message = document.getElementById("choiceMessage");
+
+    message.innerHTML =
+        "🚫 ACCÈS REFUSÉ 🚫<br><br>" +
+        "Cette option n'est pas disponible 😂❤️<br>" +
+        "Choisis l'option 1 😏💕";
+}
+
+function forever() {
+
+    document.getElementById("together").classList.add("hidden");
+    document.getElementById("final").classList.remove("hidden");
+
+    createHearts();
+
+    setInterval(createHearts, 700);
+}
+
+function createHearts() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart-float";
+
+    const hearts = ["❤️", "💕", "💖", "💗", "💘", "💞"];
+
+    heart.innerText =
+        hearts[Math.floor(Math.random() * hearts.length)];
+
+    heart.style.left =
+        Math.random() * 100 + "vw";
+
+    heart.style.animationDuration =
+        (3 + Math.random() * 3) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 6000);
+}
+
+</script>
+
+</body>
+</html>
